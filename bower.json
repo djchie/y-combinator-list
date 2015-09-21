@@ -1,0 +1,17 @@
+{
+  "name": "y-combinator-companies",
+  "version": "0.0.0",
+  "authors": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client",
+    "server"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.5",
+    "react": "~0.13.3"
+  }
+}
