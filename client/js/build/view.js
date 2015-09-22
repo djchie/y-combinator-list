@@ -237,36 +237,69 @@ var SearchForm = React.createClass({displayName: "SearchForm",
 // To use company logos, use the following as the src image
 // src={"https://logo.clearbit.com/" + this.props.data.imageUrl} onerror="this.src = '../assets/yc-logo.png'"
 var CompanyCell = React.createClass({displayName: "CompanyCell",
+  clickHandler: function () {
+    console.log('Cell clicked!');
+    console.log(this.props.company.websiteUrl);
+    window.open(this.props.company.crunchBaseUrl, '_blank');
+  },
   render: function () {
+    var statusClass = this.props.company.status.toLowerCase();
+    var classString = 'Summer';
+    if (this.props.company.cohort === 1) {
+      classString = 'Winter';
+    }
+    var descriptionString = this.props.company.description;
+    if (descriptionString === '0') {
+      descriptionString = 'Description not available';
+    }
+
+    var fundedValue = this.props.company.fundingValue;
+    // Not sure why we need to compare it to a string...
+    if (fundedValue === '0') {
+      fundedValue = 'N/A';
+    } else {
+      fundedValue = '$' + accounting.formatNumber(fundedValue);
+    }
+
+    var exitedAtValue = this.props.company.exitValue;
+    if (exitedAtValue === 0) {
+      exitedAtValue = 'N/A';
+    } else {
+      exitedAtValue = '$' + accounting.formatNumber(exitedAtValue);
+    }
+
     return (
-      React.createElement("div", {className: "companyCell col-centered col-md-9"}, 
+      React.createElement("div", {className: "companyCell col-centered col-md-9", onClick: this.clickHandler}, 
         React.createElement("div", {className: "row"}, 
           React.createElement("div", {className: "col-md-2"}, 
             React.createElement("img", {className: "company-logo", src: "../assets/yc-logo.png"})
           ), 
           React.createElement("div", {className: "col-md-8"}, 
             React.createElement("div", null, 
-              this.props.data.name, " - ", this.props.data.status
+              React.createElement("span", {className: "company-name"}, this.props.company.name), " - ", React.createElement("span", {className: statusClass}, this.props.company.status)
             ), 
             React.createElement("div", null, 
-              React.createElement("a", {href: "{this.props.data.websiteUrl}"}, this.props.data.websiteUrl)
+              React.createElement("a", {href: "{this.props.company.websiteUrl}", target: "_blank"}, this.props.company.websiteUrl)
             ), 
             React.createElement("div", null, 
-              this.props.data.description
+              descriptionString
             )
           ), 
           React.createElement("div", {className: "col-md-2"}, 
             React.createElement("div", null, 
-              this.props.data.cohort
+              React.createElement("span", {className: "class-year"}, classString, " / ", this.props.company.year)
             ), 
             React.createElement("div", null, 
-              this.props.data.year
+              "Funded:", 
+              React.createElement("div", {className: "value-figure"}, 
+                fundedValue
+              )
             ), 
             React.createElement("div", null, 
-              this.props.data.fundingValue
-            ), 
-            React.createElement("div", null, 
-              this.props.data.exitValue
+              "Exited At:", 
+              React.createElement("div", {className: "value-figure"}, 
+                exitedAtValue
+              )
             )
           )
         )
@@ -279,7 +312,7 @@ var CompanyList = React.createClass({displayName: "CompanyList",
   render: function () {
     var companyNodes = this.props.companies.map(function (company) {
       return (
-        React.createElement(CompanyCell, {data: company})
+        React.createElement(CompanyCell, {company: company})
       );
     });
     return (
@@ -389,7 +422,7 @@ var App = React.createClass({displayName: "App",
           fundingSliderHandler: this.fundingSliderHandler, 
           exitSliderHandler: this.exitSliderHandler
         }), 
-        React.createElement("div", {className: "row row-centered"}, 
+        React.createElement("div", {className: "company-count row row-centered"}, 
           React.createElement("h3", {className: "col-top col-centered"}, this.state.companies.length, " companies")
         ), 
         React.createElement(CompanyList, {companies: this.state.companies})

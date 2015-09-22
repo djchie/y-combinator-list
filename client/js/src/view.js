@@ -237,36 +237,69 @@ var SearchForm = React.createClass({
 // To use company logos, use the following as the src image
 // src={"https://logo.clearbit.com/" + this.props.data.imageUrl} onerror="this.src = '../assets/yc-logo.png'"
 var CompanyCell = React.createClass({
+  clickHandler: function () {
+    console.log('Cell clicked!');
+    console.log(this.props.company.websiteUrl);
+    window.open(this.props.company.crunchBaseUrl, '_blank');
+  },
   render: function () {
+    var statusClass = this.props.company.status.toLowerCase();
+    var classString = 'Summer';
+    if (this.props.company.cohort === 1) {
+      classString = 'Winter';
+    }
+    var descriptionString = this.props.company.description;
+    if (descriptionString === '0') {
+      descriptionString = 'Description not available';
+    }
+
+    var fundedValue = this.props.company.fundingValue;
+    // Not sure why we need to compare it to a string...
+    if (fundedValue === '0') {
+      fundedValue = 'N/A';
+    } else {
+      fundedValue = '$' + accounting.formatNumber(fundedValue);
+    }
+
+    var exitedAtValue = this.props.company.exitValue;
+    if (exitedAtValue === 0) {
+      exitedAtValue = 'N/A';
+    } else {
+      exitedAtValue = '$' + accounting.formatNumber(exitedAtValue);
+    }
+
     return (
-      <div className="companyCell col-centered col-md-9">
+      <div className="companyCell col-centered col-md-9" onClick={this.clickHandler}>
         <div className="row">
           <div className="col-md-2">
             <img className="company-logo" src="../assets/yc-logo.png"></img>
           </div>
           <div className="col-md-8">
             <div>
-              {this.props.data.name} - {this.props.data.status}
+              <span className="company-name">{this.props.company.name}</span> - <span className={statusClass}>{this.props.company.status}</span>
             </div>
             <div>
-              <a href="{this.props.data.websiteUrl}">{this.props.data.websiteUrl}</a>
+              <a href="{this.props.company.websiteUrl}" target="_blank">{this.props.company.websiteUrl}</a>
             </div>
             <div>
-              {this.props.data.description}
+              {descriptionString}
             </div>
           </div>
           <div className="col-md-2">
             <div>
-              {this.props.data.cohort}
+              <span className="class-year">{classString} / {this.props.company.year}</span>
             </div>
             <div>
-              {this.props.data.year}
+              Funded:
+              <div className="value-figure">
+                {fundedValue}
+              </div>
             </div>
             <div>
-              {this.props.data.fundingValue}
-            </div>
-            <div>
-              {this.props.data.exitValue}
+              Exited At:
+              <div className="value-figure">
+                {exitedAtValue}
+              </div>
             </div>
           </div>
         </div>
@@ -279,7 +312,7 @@ var CompanyList = React.createClass({
   render: function () {
     var companyNodes = this.props.companies.map(function (company) {
       return (
-        <CompanyCell data={company}></CompanyCell>
+        <CompanyCell company={company}></CompanyCell>
       );
     });
     return (
@@ -389,7 +422,7 @@ var App = React.createClass({
           fundingSliderHandler={this.fundingSliderHandler}
           exitSliderHandler={this.exitSliderHandler}
         ></SearchForm>
-        <div className="row row-centered">
+        <div className="company-count row row-centered">
           <h3 className="col-top col-centered">{this.state.companies.length} companies</h3>
         </div>
         <CompanyList companies={this.state.companies}></CompanyList>
