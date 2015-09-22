@@ -12,6 +12,8 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.5",
-    "react": "~0.13.3"
+    "nouislider": "~8.0.2",
+    "react": "~0.13.3",
+    "underscore": "~1.8.3"
   }
 }

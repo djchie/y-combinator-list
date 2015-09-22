@@ -175,6 +175,22 @@ var YearInput = React.createClass({
   }
 });
 
+var FundingSlider = React.createClass({
+  render: function () {
+    return (
+      <div>Funding Slider</div>
+    );
+  }
+});
+
+var ExitSlider = React.createClass({
+  render: function () {
+    return (
+      <div>Exit Slider</div>
+    );
+  }
+});
+
 var SearchForm = React.createClass({
   searchInputHandler: function (searchString) {
     this.props.searchInputHandler(searchString);
@@ -188,6 +204,12 @@ var SearchForm = React.createClass({
   yearInputHandler: function (years) {
     this.props.yearInputHandler(years);
   },
+  fundingSliderHandler: function () {
+    this.props.fundingSliderHandler();
+  },
+  exitSliderHandler: function () {
+    this.props.exitSliderHandler();
+  },
   render: function () {
     return (
       <div className="searchForm">
@@ -198,6 +220,12 @@ var SearchForm = React.createClass({
           <StatusInput statusInputHandler={this.statusInputHandler}></StatusInput>
           <ClassInput classInputHandler={this.classInputHandler}></ClassInput>
           <YearInput yearInputHandler={this.yearInputHandler}></YearInput>
+        </div>
+        <div className="row row-centered">
+          <FundingSlider fundingSliderHandler={this.fundingSliderHandler}></FundingSlider>
+        </div>
+        <div className="row row-centered">
+          <ExitSlider exitSliderHandler={this.exitSliderHandler}></ExitSlider>
         </div>
       </div>
     );
@@ -268,10 +296,15 @@ var App = React.createClass({
   getInitialState: function () {
     return {
       searchString: '',
+      statuses: [],
+      classes: [],
+      years: [],
       companies: []
     };
   },
   retrieveCompanies: function (parameters) {
+    console.log('Sending: ');
+    console.log(parameters);
     $.ajax({
       url: '/companies',
       dataType: 'json',
@@ -280,7 +313,6 @@ var App = React.createClass({
       success: function (companies) {
         console.log('Successfully got data');
         this.setState({
-          searchString: this.state.searchString,
           companies: companies
         });
       }.bind(this),
@@ -291,25 +323,57 @@ var App = React.createClass({
     });
   },
   componentDidMount: function () {
-    this.retrieveCompanies();
+    this.retrieveCompanies(this.generateStateParameters());
+  },
+  generateStateParameters: function (newParameter) {
+    var parameters = {
+      searchString: this.state.searchString,
+      statuses: this.state.statuses,
+      classes: this.state.classes,
+      years: this.state.years
+    };
+
+    if (newParameter) {
+      return _.extend(parameters, newParameter);
+    }
+
+    return parameters;
   },
   searchInputHandler: function (searchString) {
     this.setState({
-      searchString: searchString,
-      companies: this.state.companies
-    });
-    this.retrieveCompanies({
       searchString: searchString
     });
+    this.retrieveCompanies(this.generateStateParameters({searchString: searchString}));
   },
   statusInputHandler: function (statuses) {
-    console.log(statuses);
+    this.setState({
+      statuses: statuses
+    });
+    this.retrieveCompanies(this.generateStateParameters({statuses: statuses}));
   },
   classInputHandler: function (classes) {
-    console.log(classes);
+    this.setState({
+      classes: classes
+    });
+    this.retrieveCompanies(this.generateStateParameters({classes: classes}));
   },
   yearInputHandler: function (years) {
-    console.log(years)
+    this.setState({
+      years: years
+    });
+    this.retrieveCompanies(this.generateStateParameters({years: years}));
+  },
+  fundingSliderHandler: function () {
+    this.setState({
+
+    });
+    this.retrieveCompanies(this.generateStateParameters({}));
+  },
+  exitSliderHandler: function () {
+    this.setState({
+
+    });
+    this.retrieveCompanies(this.generateStateParameters({}));
   },
   render: function () {
     return (
@@ -322,7 +386,12 @@ var App = React.createClass({
           statusInputHandler={this.statusInputHandler} 
           classInputHandler={this.classInputHandler}
           yearInputHandler={this.yearInputHandler}
+          fundingSliderHandler={this.fundingSliderHandler}
+          exitSliderHandler={this.exitSliderHandler}
         ></SearchForm>
+        <div className="row row-centered">
+          <h3 className="col-top col-centered">{this.state.companies.length} companies</h3>
+        </div>
         <CompanyList companies={this.state.companies}></CompanyList>
       </div>
     );

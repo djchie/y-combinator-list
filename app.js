@@ -84,8 +84,22 @@ router.route('/companies')
   
   // GET /companies: return all companies
   .get(function (req, res) {
-    console.log(req.query.searchString);
-    db.Company.findAll().then(function (companies) {
+    var options = {};
+
+    if (req.query.statuses) {
+      options.status = req.query.statuses;
+    }
+    if (req.query.classes) {
+      options.cohort = req.query.classes;
+    }
+    if (req.query.years) {
+      options.year = req.query.years;
+    }
+
+    console.log(req.query);
+    db.Company.findAll({
+      where: options
+    }).then(function (companies) {
       res.json(companies);
     });
 

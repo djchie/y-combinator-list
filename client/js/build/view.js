@@ -175,6 +175,22 @@ var YearInput = React.createClass({displayName: "YearInput",
   }
 });
 
+var FundingSlider = React.createClass({displayName: "FundingSlider",
+  render: function () {
+    return (
+      React.createElement("div", null, "Funding Slider")
+    );
+  }
+});
+
+var ExitSlider = React.createClass({displayName: "ExitSlider",
+  render: function () {
+    return (
+      React.createElement("div", null, "Exit Slider")
+    );
+  }
+});
+
 var SearchForm = React.createClass({displayName: "SearchForm",
   searchInputHandler: function (searchString) {
     this.props.searchInputHandler(searchString);
@@ -188,6 +204,12 @@ var SearchForm = React.createClass({displayName: "SearchForm",
   yearInputHandler: function (years) {
     this.props.yearInputHandler(years);
   },
+  fundingSliderHandler: function () {
+    this.props.fundingSliderHandler();
+  },
+  exitSliderHandler: function () {
+    this.props.exitSliderHandler();
+  },
   render: function () {
     return (
       React.createElement("div", {className: "searchForm"}, 
@@ -198,6 +220,12 @@ var SearchForm = React.createClass({displayName: "SearchForm",
           React.createElement(StatusInput, {statusInputHandler: this.statusInputHandler}), 
           React.createElement(ClassInput, {classInputHandler: this.classInputHandler}), 
           React.createElement(YearInput, {yearInputHandler: this.yearInputHandler})
+        ), 
+        React.createElement("div", {className: "row row-centered"}, 
+          React.createElement(FundingSlider, {fundingSliderHandler: this.fundingSliderHandler})
+        ), 
+        React.createElement("div", {className: "row row-centered"}, 
+          React.createElement(ExitSlider, {exitSliderHandler: this.exitSliderHandler})
         )
       )
     );
@@ -268,10 +296,15 @@ var App = React.createClass({displayName: "App",
   getInitialState: function () {
     return {
       searchString: '',
+      statuses: [],
+      classes: [],
+      years: [],
       companies: []
     };
   },
   retrieveCompanies: function (parameters) {
+    console.log('Sending: ');
+    console.log(parameters);
     $.ajax({
       url: '/companies',
       dataType: 'json',
@@ -280,7 +313,6 @@ var App = React.createClass({displayName: "App",
       success: function (companies) {
         console.log('Successfully got data');
         this.setState({
-          searchString: this.state.searchString,
           companies: companies
         });
       }.bind(this),
@@ -291,25 +323,57 @@ var App = React.createClass({displayName: "App",
     });
   },
   componentDidMount: function () {
-    this.retrieveCompanies();
+    this.retrieveCompanies(this.generateStateParameters());
+  },
+  generateStateParameters: function (newParameter) {
+    var parameters = {
+      searchString: this.state.searchString,
+      statuses: this.state.statuses,
+      classes: this.state.classes,
+      years: this.state.years
+    };
+
+    if (newParameter) {
+      return _.extend(parameters, newParameter);
+    }
+
+    return parameters;
   },
   searchInputHandler: function (searchString) {
     this.setState({
-      searchString: searchString,
-      companies: this.state.companies
-    });
-    this.retrieveCompanies({
       searchString: searchString
     });
+    this.retrieveCompanies(this.generateStateParameters({searchString: searchString}));
   },
   statusInputHandler: function (statuses) {
-    console.log(statuses);
+    this.setState({
+      statuses: statuses
+    });
+    this.retrieveCompanies(this.generateStateParameters({statuses: statuses}));
   },
   classInputHandler: function (classes) {
-    console.log(classes);
+    this.setState({
+      classes: classes
+    });
+    this.retrieveCompanies(this.generateStateParameters({classes: classes}));
   },
   yearInputHandler: function (years) {
-    console.log(years)
+    this.setState({
+      years: years
+    });
+    this.retrieveCompanies(this.generateStateParameters({years: years}));
+  },
+  fundingSliderHandler: function () {
+    this.setState({
+
+    });
+    this.retrieveCompanies(this.generateStateParameters({}));
+  },
+  exitSliderHandler: function () {
+    this.setState({
+
+    });
+    this.retrieveCompanies(this.generateStateParameters({}));
   },
   render: function () {
     return (
@@ -321,8 +385,13 @@ var App = React.createClass({displayName: "App",
           searchInputHandler: this.searchInputHandler, 
           statusInputHandler: this.statusInputHandler, 
           classInputHandler: this.classInputHandler, 
-          yearInputHandler: this.yearInputHandler
+          yearInputHandler: this.yearInputHandler, 
+          fundingSliderHandler: this.fundingSliderHandler, 
+          exitSliderHandler: this.exitSliderHandler
         }), 
+        React.createElement("div", {className: "row row-centered"}, 
+          React.createElement("h3", {className: "col-top col-centered"}, this.state.companies.length, " companies")
+        ), 
         React.createElement(CompanyList, {companies: this.state.companies})
       )
     );
