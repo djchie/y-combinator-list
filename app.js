@@ -48,6 +48,9 @@ db.sequelize.sync({
 // Create an express app
 var app = express();
 
+app.use(express.static(__dirname + '/client'));
+app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+
 // Configure the app to use bodyParser()
 // This will let us get the data from post
 app.use(bodyParser.urlencoded({
@@ -71,7 +74,7 @@ app.use(function (req, res, next) {
 });
 
 // Ideally, this route sends the index.html
-router.get('*', function (req, res) {
+router.get('/', function (req, res) {
   res.sendFile(__dirname + '/client/index.html');
 });
 

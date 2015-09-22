@@ -10,21 +10,13 @@
 
 <body>
 
-<div id="main"></div>
+  <div id="main"></div>
 
 <script src="../bower_components/react/react-with-addons.min.js"></script>
 <script src="../bower_components/react/JSXTransformer.js"></script>
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<script src="js/company.js"></script>
-<script type="text/jsx">
-  React.render(
-    <p>Hello World!</p>,
-    document.getElementById('main')
-  );
-</script>
-
-<!-- <script type="text/jsx" src="js/view.js"></script> -->
-
+<script type="text/jsx" src="js/src/view.js"></script> <!-- Uncomment for runtime transformation of JSX during development -->
+<!--<script src="js/build/view.js"></script>--> <!-- Uncomment for runtime transformation of JSX during development -->
 
 </body>
 
