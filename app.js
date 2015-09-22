@@ -86,6 +86,22 @@ router.route('/companies')
   .get(function (req, res) {
     var options = {};
 
+    if (req.query.searchString !== '') {
+      // options.status = req.query.statuses;
+
+      options.$or = [
+        {
+          name: {
+            $like: '%' + req.query.searchString + '%'
+          }
+        },
+        {
+          description: {
+            $like: '%' + req.query.searchString + '%'
+          }
+        }
+      ]
+    }
     if (req.query.statuses) {
       options.status = req.query.statuses;
     }
