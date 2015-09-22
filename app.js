@@ -31,7 +31,8 @@ db.sequelize.sync({
           exitValue: companyData[i]['exitValue'],
           colValue: companyData[i]['colValue'].toString(),
           fundingValue: companyData[i]['fundingValue'],
-          description: companyData[i]['description'].toString()
+          description: companyData[i]['description'].toString(),
+          imageUrl: companyData[i]['imageUrl'].toString()
         }
       }).spread(function (company, created) {
         if (!created) {
@@ -80,11 +81,11 @@ router.get('/', function (req, res) {
 
 // On routes that end in /companies
 router.route('/companies')
-
+  
+  // GET /companies: return all companies
   .get(function (req, res) {
-
+    console.log(req.query.searchString);
     db.Company.findAll().then(function (companies) {
-      // Ideally, this sends an html response via res.sendFile()
       res.json(companies);
     });
 

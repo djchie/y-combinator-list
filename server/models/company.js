@@ -38,6 +38,9 @@ module.exports = function(sequelize, DataTypes) {
     },
     description: {
       type: DataTypes.STRING
+    },
+    imageUrl: {
+      type: DataTypes.STRING
     }
   }, {
     classMethods: {
