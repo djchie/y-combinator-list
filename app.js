@@ -92,12 +92,12 @@ router.route('/companies')
       options.$or = [
         {
           name: {
-            $like: '%' + req.query.searchString + '%'
+            ilike: '%' + req.query.searchString + '%'
           }
         },
         {
           description: {
-            $like: '%' + req.query.searchString + '%'
+            ilike: '%' + req.query.searchString + '%'
           }
         }
       ]
