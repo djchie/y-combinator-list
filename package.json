@@ -4,10 +4,12 @@
   "scripts": {
     "build": "jsx --watch client/js/src/ client/js/build/",
     "start": "node app.js",
-    "deploy": "git push heroku master"
+    "deploy": "git push heroku master",
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
+    "bower": "^1.6.5",
     "express": "~4.13.1",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
