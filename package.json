@@ -1,6 +1,10 @@
 {
   "name": "y-combinator-companies",
   "main": "server.js",
+  "scripts": {
+    "build": "jsx --watch client/js/src/ client/js/build/",
+    "start": "node app.js"
+  },
   "dependencies": {
     "body-parser": "~1.13.2",
     "express": "~4.13.1",
