@@ -14,7 +14,7 @@
 
 ## Usage
 
-> Some usage instructions
+> Easily search for the Y Combinator companies in the search box and slice, dice, and filter out the results via the checkboxes to find the company you're looking for. There's no need to hit a button or press enter to search because the search is done with every keystroke. Click on the website link of your search results to check out the company website or click on the cell to check out the Crunchbase profile for that company.
 
 ## Requirements
 
