@@ -3,7 +3,8 @@
   "main": "server.js",
   "scripts": {
     "build": "jsx --watch client/js/src/ client/js/build/",
-    "start": "node app.js"
+    "start": "node app.js",
+    "deploy": "git add . && git commit -am 'deploy commit' && git push heroku master"
   },
   "dependencies": {
     "body-parser": "~1.13.2",

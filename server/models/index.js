@@ -1,11 +1,14 @@
 var fs = require("fs");
 var path = require("path");
 var Sequelize = require('sequelize');
-// var environment = process.env.NODE_ENV || 'development';
-var environment = 'development';
-var config = require(__dirname + '/../../config/config.json')[environment];
+var environment = process.env.NODE_ENV || 'development';
+var config = require(__dirname + '/../../config/config.js')[environment];
 
 var sequelize = new Sequelize(config.database, config.username, config.password, config);
+if (environment === 'production') {
+  console.log(config.database);
+  var sequelize = new Sequelize(config.database, config);
+}
 var db = {};
 
 fs.readdirSync(__dirname).filter(function(file) {

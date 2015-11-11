@@ -1,4 +1,4 @@
-{
+var config = {
   "development": {
     "database": "yc_companies_development",
     "username": "",
@@ -14,10 +14,12 @@
     "dialect": "postgres"
   },
   "production": {
-    "database": "yc_companies_production",
-    "username": "root",
-    "password": null,
-    "host": "127.0.0.1",
-    "dialect": "postgres"
+    "database": process.env.DATABASE_URL,
+    "dialect": "postgres",
+    "dialectOptions": {
+      ssl: true
+    }
   }
 }
+
+module.exports = config;
