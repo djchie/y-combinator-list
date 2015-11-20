@@ -1,6 +1,6 @@
 # Y Combinator Companies Webapp
 
-> A webapp for displaying Y Combinator companies built with React, Node.js, Express, and PostgreSQL. This webapp uses Sequelize as an ORM and Flux for the architecture. Check out the webapp at [y-combinator-companies.herokuapp.com](http://y-combinator-companies.herokuapp.com/)!
+> A webapp for displaying Y Combinator companies built with React, Node.js, Express, and PostgreSQL. This webapp uses Gulp, Sequelize as an ORM, and Flux for the architecture. Check out the webapp at [y-combinator-companies.herokuapp.com](http://y-combinator-companies.herokuapp.com/)!
 
 ## Table of Contents
 
@@ -28,9 +28,7 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
 ```
 
 ### Running Webapp Locally
@@ -61,4 +59,4 @@ View the project roadmap [here](https://github.com/djchie/y-combinator-companies
 
 ## Contributing
 
-See [CONTRIBUTING.md](https://github.com/djchie/y-combinator-companies/blob/master/CONTRIBUTING.md) for contribution guidelines.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
