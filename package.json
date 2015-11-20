@@ -4,8 +4,7 @@
   "scripts": {
     "build": "gulp",
     "start": "node app.js",
-    "deploy": "git push heroku master",
-    "postinstall": "npm run build"
+    "deploy": "git push heroku master"
   },
   "dependencies": {
     "accounting": "^0.4.1",
