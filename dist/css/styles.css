@@ -1,0 +1,99 @@
+.row-centered {
+  text-align:center;
+}
+.col-centered {
+  display:inline-block;
+  float:none;
+  /* reset the text-align */
+  text-align:left;
+  /* inline-block space fix */
+  margin-right:-4px;
+}
+
+.col-top {
+  vertical-align: top;
+}
+
+.checkbox {
+  margin-left: 50px;
+}
+
+.row-top {
+  margin-top: -15px;
+}
+
+.companyCell {
+  background-color: red;
+}
+
+img {
+  width: 70px;
+  height: auto;
+  border: 5px solid black;
+  border-radius: 50px;
+}
+
+.company-logo{ 
+  margin-top: 5px;
+  margin-left: 25px;
+}
+
+.searchForm {
+  border: 5px solid black;
+  border-radius: 30px;
+  margin-left: 200px;
+  margin-right: 200px;
+  background-color: #F26522;
+}
+
+.searchInput {
+  margin-top: 25px;
+}
+
+.exitSlider {
+  margin-bottom: 25px;
+}
+
+.company-count {
+  margin-bottom: 15px;
+}
+
+.companyCell {
+  border: 2px solid black;
+  border-radius: 30px;
+  background-color: #FFA578;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.company-name {
+  font-size: 18px;
+  font-weignt: bold;
+}
+
+.operating {
+  color: green;
+}
+
+.exited {
+  color: blue;
+}
+
+.dead {
+  color: red;
+}
+
+.class-year {
+  font-size: 16px;
+  font-weignt: bold;
+}
+
+.value-figure {
+  text-align: center;
+}
+
+
+
+
+
+
