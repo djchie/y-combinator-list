@@ -1,9 +1,7 @@
 var React = require('react');
 var _ = require('underscore');
-
 var CompanyActions = require('../actions/company-actions');
 var CompanyStore = require('../stores/company-store');
-
 var SearchForm = require('./search-form');
 var CompanyList = require('./company-list');
 

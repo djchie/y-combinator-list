@@ -1,10 +1,11 @@
 var React = require('react');
+var CompanyCell = require('./company-cell');
 
 var CompanyList = React.createClass({
   render: function () {
-    var companyNodes = this.props.companies.map(function (company) {
+    var companyNodes = this.props.companies.map(function (company, i) {
       return (
-        <CompanyCell company={company}></CompanyCell>
+        <CompanyCell company={company} key={i}></CompanyCell>
       );
     });
     return (
