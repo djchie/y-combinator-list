@@ -1,4 +1,12 @@
-/* ---------- Main View ---------- */
+var React = require('react');
+var _ = require('underscore');
+
+var CompanyActions = require('../actions/company-actions');
+var CompanyStore = require('../stores/company-store');
+
+var SearchForm = require('./search-form');
+var CompanyList = require('./company-list');
+
 
 var App = React.createClass({
   getInitialState: function () {
@@ -7,32 +15,21 @@ var App = React.createClass({
       statuses: [],
       classes: [],
       years: [],
-      companies: []
+      companies: CompanyStore.getCompanies()
     };
   },
-  retrieveCompanies: function (parameters) {
-    console.log('Sending: ');
-    console.log(parameters);
-    $.ajax({
-      url: '/companies',
-      dataType: 'json',
-      type: 'GET',
-      data: parameters,
-      success: function (companies) {
-        console.log('Successfully got data');
-        this.setState({
-          companies: companies
-        });
-      }.bind(this),
-      error: function (xhr, status, error) {
-        console.log('Failed to get data');
-        console.log('Error with GET /companies: ' + status + ' - ' + error);
-      }.bind(this)
-    });
-  },
   componentDidMount: function () {
-    this.retrieveCompanies(this.generateStateParameters());
+    CompanyStore.addChangeListener(this._onChange);
+    CompanyActions.getAllCompanies(this.generateStateParameters());
   },
+  componentWillUnmount: function () {
+    CompanyStore.removeChangeListener(_onChange);
+  },
+  _onChange: function () {
+    this.setState({
+      companies: CompanyStore.getCompanies()
+    });
+  },  
   generateStateParameters: function (newParameter) {
     var parameters = {
       searchString: this.state.searchString,
@@ -51,37 +48,37 @@ var App = React.createClass({
     this.setState({
       searchString: searchString
     });
-    this.retrieveCompanies(this.generateStateParameters({searchString: searchString}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({searchString: searchString}));
   },
   statusInputHandler: function (statuses) {
     this.setState({
       statuses: statuses
     });
-    this.retrieveCompanies(this.generateStateParameters({statuses: statuses}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({statuses: statuses}));
   },
   classInputHandler: function (classes) {
     this.setState({
       classes: classes
     });
-    this.retrieveCompanies(this.generateStateParameters({classes: classes}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({classes: classes}));
   },
   yearInputHandler: function (years) {
     this.setState({
       years: years
     });
-    this.retrieveCompanies(this.generateStateParameters({years: years}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({years: years}));
   },
   fundingSliderHandler: function () {
     this.setState({
 
     });
-    this.retrieveCompanies(this.generateStateParameters({}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({}));
   },
   exitSliderHandler: function () {
     this.setState({
 
     });
-    this.retrieveCompanies(this.generateStateParameters({}));
+    CompanyActions.getAllCompanies(this.generateStateParameters({}));
   },
   render: function () {
     return (
@@ -106,9 +103,4 @@ var App = React.createClass({
   }
 });
 
-/* ---------- Render Main View ---------- */
-
-React.render(
-  <App></App>,
-  document.getElementById('main')
-);
+module.exports = App;

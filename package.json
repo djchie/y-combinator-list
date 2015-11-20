@@ -2,17 +2,24 @@
   "name": "y-combinator-companies",
   "main": "server.js",
   "scripts": {
-    "build": "jsx --watch client/js/src/ client/js/build/",
+    "build": "gulp",
     "start": "node app.js",
     "deploy": "git push heroku master",
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "postinstall": "npm run build"
   },
   "dependencies": {
+    "accounting": "^0.4.1",
     "body-parser": "~1.13.2",
     "bower": "^1.6.5",
+    "browserify": "^12.0.1",
     "express": "~4.13.1",
+    "gulp": "^3.9.0",
+    "jquery": "^2.1.4",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.3.2"
+    "react-dom": "^0.14.3",
+    "reactify": "^1.1.1",
+    "sequelize": "^3.3.2",
+    "underscore": "^1.8.3"
   }
 }

@@ -1,8 +1,8 @@
-/* ---------- Search Form View ---------- */
+var React = require('react');
 
 var SearchInput = React.createClass({
   searchInputHandler: function () {
-    var searchString = this.refs.searchInput.getDOMNode().value;
+    var searchString = this.refs.searchInput.value;
     this.props.searchInputHandler(searchString);
   },
   render: function () {
@@ -19,8 +19,8 @@ var StatusInput = React.createClass({
   statusInputHandler: function () {
     var statuses = [];
     for (var key in this.refs) {
-      if (this.refs[key].getDOMNode().checked) {
-        statuses.push(this.refs[key].getDOMNode().value);
+      if (this.refs[key].checked) {
+        statuses.push(this.refs[key].value);
       }
     }
     this.props.statusInputHandler(statuses);
@@ -56,8 +56,8 @@ var ClassInput = React.createClass({
   classInputHandler: function () {
     var classes = [];
     for (var key in this.refs) {
-      if (this.refs[key].getDOMNode().checked) {
-        classes.push(this.refs[key].getDOMNode().value);
+      if (this.refs[key].checked) {
+        classes.push(this.refs[key].value);
       }
     }
     this.props.classInputHandler(classes);
@@ -87,8 +87,8 @@ var YearInput = React.createClass({
   yearInputHandler: function () {
     var years = [];
     for (var key in this.refs) {
-      if (this.refs[key].getDOMNode().checked) {
-        years.push(this.refs[key].getDOMNode().value);
+      if (this.refs[key].checked) {
+        years.push(this.refs[key].value);
       }
     }
     this.props.yearInputHandler(years);
@@ -174,67 +174,6 @@ var YearInput = React.createClass({
   }
 });
 
-var FundingSlider = React.createClass({
-  componentDidMount: function () {
-    var sliderNode = this.refs.fundingSlider.getDOMNode();
-    var fundSliderHandler = this.props.onChange;
-    noUiSlider.create(sliderNode, {
-      start: [0, 3000000000],
-      connect: true,
-      range: {
-        'min': 0,
-        'max': 3000000000
-      }
-    });
-    // sliderNode.Link('lower').to('-inline-<div class="tooltip"></div>', function ( value ) {
-    //   $(this).html(
-    //       '<span>' + value.substr(0, value.length - 1) + '</span>'
-    //   );
-    // });
-    // sliderNode.Link('upper').to('-inline-<div class="tooltip"></div>', function ( value ) {
-    //   $(this).html(
-    //       '<span>' + value.substr(0, value.length - 1) + '</span>'
-    //   );
-    // });
-    // sliderNode.on({
-    //   change: function(event){
-    //       changeHandler($el.val());
-    //   }
-    // });
-  },
-  render: function () {
-    return (
-      <div className="slider-wrapper">
-        <label><span className="slider-label">Funded Amount</span></label>
-        <div ref="fundingSlider"></div>
-      </div>
-    );
-  }
-});
-
-var ExitSlider = React.createClass({
-  componentDidMount: function () {
-    var sliderNode = this.refs.exitSlider.getDOMNode();
-    var exitSliderHandler = this.props.onChange;
-    noUiSlider.create(sliderNode, {
-      start: [0, 1000000000],
-      connect: true,
-      range: {
-        'min': 0,
-        'max': 1000000000
-      }
-    });
-  },
-  render: function () {
-    return (
-      <div className="slider-wrapper">
-        <label><span className="slider-label">Exited Amount</span></label>
-        <div ref="exitSlider"></div>
-      </div>
-    );
-  }
-});
-
 var SearchForm = React.createClass({
   searchInputHandler: function (searchString) {
     this.props.searchInputHandler(searchString);
@@ -265,13 +204,9 @@ var SearchForm = React.createClass({
           <ClassInput classInputHandler={this.classInputHandler}></ClassInput>
           <YearInput yearInputHandler={this.yearInputHandler}></YearInput>
         </div>
-        <div className="row row-centered">
-          <FundingSlider fundingSliderHandler={this.fundingSliderHandler}></FundingSlider>
-        </div>
-        <div className="row row-centered">
-          <ExitSlider exitSliderHandler={this.exitSliderHandler}></ExitSlider>
-        </div>
       </div>
     );
   }
 });
+
+module.exports = SearchForm;
