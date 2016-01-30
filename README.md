@@ -1,4 +1,4 @@
-# Y Combinator Companies Webapp
+# Y Combinator List Webapp
 
 > A webapp for displaying Y Combinator companies built with React, Node.js, Express, and PostgreSQL. This webapp uses Gulp, Sequelize as an ORM, and Flux for the architecture. Check out the webapp at [y-combinator-companies.herokuapp.com](http://y-combinator-companies.herokuapp.com/)!
 
